@@ -25,12 +25,8 @@ jobs:
 
     - name: Create report directories
       run: |
-        mkdir -p reports/mypy_reports/ugc_api
         mkdir -p reports/mypy_reports/action_api
-        mkdir -p reports/mypy_reports/etl_ugc
-        mkdir -p reports/styleguide_reports/ugc_api
         mkdir -p reports/styleguide_reports/action_api
-        mkdir -p reports/styleguide_reports/etl_ugc
 
     - name: PR review with wemake-python-styleguide
       uses: wemake-services/wemake-python-styleguide
