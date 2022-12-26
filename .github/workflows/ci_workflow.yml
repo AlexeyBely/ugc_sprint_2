@@ -37,15 +37,11 @@ jobs:
 
     - name: Run mypy
       run: |
-        mypy ugc_api --ignore-missing-imports --html-report reports/mypy_reports/ugc_api
         mypy action_api --ignore-missing-imports --html-report reports/mypy_reports/action_api
-        mypy etl_ugc --ignore-missing-imports --html-report reports/mypy_reports/etl_ugc
 
     - name: Run flake8/styleguide
       run: |
-        flake8 ugc_api --config=setup.cfg --exit-zero --format=html --htmldir=reports/styleguide_reports/ugc_api
         flake8 action_api --config=setup.cfg --exit-zero --format=html --htmldir=reports/styleguide_reports/action_api
-        flake8 etl_ugc --config=setup.cfg --exit-zero --format=html --htmldir=reports/styleguide_reports/etl_ugc
 
   notification:
   needs: build
