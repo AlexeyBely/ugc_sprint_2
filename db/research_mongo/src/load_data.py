@@ -2,8 +2,7 @@ import logging
 import logging.config
 from cfg import LOGGING
 
-from datetime import datetime
-from collection_data import map_collections
+from collection_data import map_collections, USER_COUNT
 
 import pymongo
 from pymongo import MongoClient
@@ -24,7 +23,8 @@ if __name__ == '__main__':
         collection = db[coll_name]
         values = []
         counter: int = 0
-        for i in range(0, 100000):
+        count_docs = 1000 * USER_COUNT
+        for i in range(0, count_docs):
             data = map_collections[coll_name]()        
             values.append(data)
             if len(values) >= 1000:

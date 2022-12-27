@@ -3,9 +3,9 @@ import random
 
 from datetime import datetime
 
-
-user_ids = [str(uuid.uuid4()) for x in range(1000)]
-movie_ids = [str(uuid.uuid4()) for x in range(1000)]
+USER_COUNT = 1000
+user_ids = [str(uuid.uuid4()) for x in range(USER_COUNT)]
+movie_ids = [str(uuid.uuid4()) for x in range(USER_COUNT)]
 
 
 def get_random_like() -> dict:
