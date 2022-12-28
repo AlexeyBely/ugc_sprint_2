@@ -11,7 +11,6 @@
     
 - FastAPI
 - MongoDB
--  
 
 ### Над проектом работали
 - Алексей Белоглазов (тимлид) [@AlexeyBely](https://github.com/AlexeyBely)
