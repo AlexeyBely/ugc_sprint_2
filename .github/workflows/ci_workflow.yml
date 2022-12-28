@@ -36,11 +36,6 @@ jobs:
       run: |
         flake8 action_api --config=setup.cfg --exit-zero --format=html --htmldir=reports/styleguide_reports/action_api
 
-  notification:
-  needs: build
-  if: always()
-  runs-on: ubuntu-latest
-  steps:
     - name: send telegram notification
       uses: appleboy/telegram-action@master
       with:
