@@ -28,13 +28,6 @@ jobs:
         mkdir -p reports/mypy_reports/action_api
         mkdir -p reports/styleguide_reports/action_api
 
-#    - name: PR review with wemake-python-styleguide
-#      uses: wemake-services/wemake-python-styleguide
-#      with:
-#        reporter: 'github-pr-review'
-#      env:
-#        GITHUB_TOKEN: ${{ secrets.github_token }}
-
     - name: Run mypy
       run: |
         mypy action_api --ignore-missing-imports --html-report reports/mypy_reports/action_api
