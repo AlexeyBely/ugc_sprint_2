@@ -24,7 +24,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install lxml types-requests mypy wemake-python-styleguide flake8-html
+        pip install lxml types-requests mypy flake8 wemake-python-styleguide flake8-html
 
     - name: Create report directories
       run: |
@@ -37,7 +37,7 @@ jobs:
 
     - name: Run flake8/styleguide
       run: |
-        flake8 action_api --config=setup.cfg --exit-zero --format=html --htmldir=reports/styleguide_reports/action_api
+        flake8 action_api --config=setup.cfg --exit-zero --format=html --htmldir=action_api_report
 
   message:
 
