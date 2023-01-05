@@ -37,7 +37,7 @@ jobs:
 
     - name: Run flake8/styleguide
       run: |
-        flake8 action_api --config=setup.cfg --exit-zero --format=html --htmldir=action_api_report
+        flake8 action_api --config=setup.cfg --exit-zero --format=html --htmldir=reports/styleguide_reports/action_api
 
   message:
 
