@@ -25,7 +25,7 @@ class MongoLikesService(BaseLikesService, UtilsService):
 
     async def read_likes(
         self,
-        user_id: uuid.UUID | None = None,
+        user_id: uuid.UUID,
         movie_id: uuid.UUID | None = None,
         size: int = setting.default_page_size,
         page: int = 1,
