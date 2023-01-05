@@ -143,4 +143,5 @@ services:
 
 networks:
   default:
-    name: mongo_network
+    name: movies_networks  
+    external: true
