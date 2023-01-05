@@ -1,5 +1,3 @@
-import uvicorn
-
 from api.v1 import frame
 from core.config import api_settings
 from db import db_kafka
