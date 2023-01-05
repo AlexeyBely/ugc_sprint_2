@@ -39,6 +39,12 @@ jobs:
       run: |
         flake8 action_api --config=setup.cfg --exit-zero --format=html --htmldir=reports/styleguide_reports/action_api
 
+  message:
+
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    needs: build
+    steps:
     - name: send telegram notification
       uses: appleboy/telegram-action@master
       with:
@@ -49,4 +55,4 @@ jobs:
           Author: ${{ github.actor }}
           Commit message: ${{ github.event.commits[0].message }}
           See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
-          Pipeline status: ${{ jobs.build.result }}
+          Pipeline status: ${{ needs.build.result }}
