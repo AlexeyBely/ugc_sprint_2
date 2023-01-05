@@ -4,15 +4,8 @@ LOG_DEFAULT_HANDLERS = ['console', 'file']
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': LOG_FORMAT
-        },
-        'fileform': {
-            'format': LOG_FORMAT
-        },
-    },
-    'handlers': {        
+    'formatters': {'verbose': {'format': LOG_FORMAT}, 'fileform': {'format': LOG_FORMAT},},
+    'handlers': {
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
@@ -23,17 +16,8 @@ LOGGING = {
             'class': 'logging.FileHandler',
             'filename': 'logs/logfile.log',
             'formatter': 'fileform',
-        },    
-    },
-    'loggers': {
-        '': {
-            'handlers': LOG_DEFAULT_HANDLERS,
-            'level': 'DEBUG',
         },
     },
-    'root': {
-        'level': 'INFO',
-        'formatter': 'verbose',
-        'handlers': LOG_DEFAULT_HANDLERS,
-    },
+    'loggers': {'': {'handlers': LOG_DEFAULT_HANDLERS, 'level': 'DEBUG',},},
+    'root': {'level': 'INFO', 'formatter': 'verbose', 'handlers': LOG_DEFAULT_HANDLERS,},
 }

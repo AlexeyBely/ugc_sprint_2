@@ -11,12 +11,14 @@ from pymongo.errors import PyMongoError
 
 logging.config.dictConfig(LOGGING)
 logger = logging.getLogger('load_data')
-client = MongoClient('mongodb://0.0.0.0:27019, 0.0.0.0:27020')
+client = MongoClient(
+    'mongodb://0.0.0.0:27019, 0.0.0.0:27020', uuidRepresentation='pythonLegacy'
+)
 db = client['actionsDb']
 
 
 if __name__ == '__main__':
-    logger.info('start')    
+    logger.info('start')
     coll_names = db.list_collection_names()
     logger.info(f'collections: {coll_names}')
     for coll_name in coll_names:
@@ -25,7 +27,7 @@ if __name__ == '__main__':
         counter: int = 0
         count_docs = 1000 * USER_COUNT
         for i in range(0, count_docs):
-            data = map_collections[coll_name]()        
+            data = map_collections[coll_name]()
             values.append(data)
             if len(values) >= 1000:
                 try:
@@ -37,8 +39,3 @@ if __name__ == '__main__':
                     counter += 1000
                     logger.info(f'insert {counter} docs in collection {coll_name}')
     logger.info('load OK')
-
-
-
-
-
