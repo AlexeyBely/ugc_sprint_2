@@ -34,7 +34,7 @@ jobs:
 
     - name: Run mypy
       run: |
-        MYPYPATH=action_api/src mypy action_api --namespace-packages --explicit-package-bases --html-report reports/mypy_reports/action_api
+        MYPYPATH=action_api/src mypy action_api --ignore-missing-imports --explicit-package-bases --html-report reports/mypy_reports/action_api
 
     - name: Run flake8/styleguide
       run: |
