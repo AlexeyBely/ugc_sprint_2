@@ -6,12 +6,13 @@
 - Поднятие кластера mongoDB в каталоге db/mongo;
 - Исследование хранилища mongoDB в каталоге db/research_mongo;
 - API-cервис для добавления лайков, рецензий, закладкок. Реализован как отдельный сервис.
+- Workflow для action github 
 
 ### Использованные технологии
     
 - FastAPI
 - MongoDB
-- 
+- CI Action github
 
 ### Над проектом работали
 - Алексей Белоглазов (тимлид) [@AlexeyBely](https://github.com/AlexeyBely)
