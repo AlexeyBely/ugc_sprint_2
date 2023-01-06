@@ -9,10 +9,10 @@ class PyObjectId(ObjectId):
         yield cls.validate
 
     @classmethod
-    def validate(cls, v):
-        if not ObjectId.is_valid(v):
+    def validate(cls, valid_value):
+        if not ObjectId.is_valid(valid_value):
             raise ValueError('Invalid objectid')
-        return str(v)
+        return str(valid_value)
 
     @classmethod
     def __modify_schema__(cls, field_schema):

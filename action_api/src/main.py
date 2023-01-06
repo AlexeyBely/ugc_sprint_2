@@ -26,13 +26,7 @@ async def startup():
     )
 
 
-@app.on_event('shutdown')
-async def shutdown():
-    pass
-
-
 app.include_router(likes.router, prefix='/action/api/v1/likes', tags=['likes'])
 app.include_router(reviews.router, prefix='/action/api/v1/reviews', tags=['reviews'])
 app.include_router(bookmarks.router, prefix='/action/api/v1/bookmarks', 
                    tags=['bookmarks'])
-
