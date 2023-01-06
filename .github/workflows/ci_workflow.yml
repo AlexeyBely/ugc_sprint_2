@@ -38,6 +38,12 @@ jobs:
     - name: Run flake8/styleguide
       run: |
         flake8 action_api --config=setup.cfg --exit-zero --format=html --htmldir=reports/styleguide_reports/action_api
+        
+    - name: Upload reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: reports
+        path: reports/
 
   message:
 
