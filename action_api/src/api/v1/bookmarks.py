@@ -51,7 +51,7 @@ async def delete_bookmark(
     result = await bm_service.delete_bookmark(user_id, add_bm.movie_id)
     if result is True:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail=messages.FAULT_BOBY)
-    return Response(status_code=status.HTTP_204_NO_CONTENT)
+    return Response(status_code=status.HTTP_204_NO_CONTENT, detail=messages.DOC_DELETED)
 
 
 @router.get(
