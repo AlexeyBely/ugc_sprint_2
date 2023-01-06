@@ -1,6 +1,6 @@
 from http import HTTPStatus
 from fastapi import APIRouter, Depends, HTTPException, Body, status
-from fastapi.responses import JSONResponse, Response
+from fastapi.responses import Response
 import uuid
 
 from models.response import PaginatedLikes, InfoLikes
@@ -51,7 +51,7 @@ async def delete_like(
     result = await likes_service.delete_like(user_id, add_like.movie_id)
     if result is True:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail=messages.FAULT_BOBY)
-    return Response(status_code=status.HTTP_204_NO_CONTENT, detail=messages.DOC_DELETED)
+    Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 @router.get(
