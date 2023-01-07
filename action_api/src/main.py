@@ -4,6 +4,13 @@ from db import db_mongo
 
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
+import sentry_sdk
+
+
+sentry_sdk.init(
+    setting.dns_sentry,
+    traces_sample_rate=1.0,
+)
 
 
 app = FastAPI(
@@ -25,3 +32,12 @@ app.include_router(likes.router, prefix='/action/api/v1/likes', tags=['likes'])
 app.include_router(reviews.router, prefix='/action/api/v1/reviews', tags=['reviews'])
 app.include_router(bookmarks.router, prefix='/action/api/v1/bookmarks', 
                    tags=['bookmarks'])
+
+
+@app.get(
+    "/action/api/sentry-debug",
+    summary='Тест отправки исключений',
+    description='Проверка что неотловленные исключения доставляются в Sentry',
+)
+async def trigger_error():
+    division_by_zero = 1 / 0
