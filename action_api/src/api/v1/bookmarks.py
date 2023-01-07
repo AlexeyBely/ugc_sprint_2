@@ -32,7 +32,7 @@ async def add_bookmark(
     bookmark = await bm_service.add_bookmark(user_id, add_bm.movie_id)
     if not bookmark:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail=messages.FAULT_BOBY)
-    return bookmark
+    return Bookmark(**bookmark)
 
 
 @router.delete(
@@ -71,4 +71,4 @@ async def reviews_list(
     bookmarks = await bm_service.read_bookmarks(user_id, paginate.size, paginate.page)
     if not bookmarks:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail=messages.FAULT_BOBY)
-    return bookmarks
+    return PaginatedBookmarks(**bookmarks)

@@ -19,14 +19,18 @@ class IdMovie(BaseModel):
 
 
 class AddLike(BaseModel):
-    movie_id: UUID4 | None = Field(None, description='movie_id')
+    movie_id: UUID4 = Field(description='movie_id')
     like: int = Field(1, description='reiting', ge=1, le=10)
 
 
 class AddReview(BaseModel):
-    movie_id: UUID4 | None = Field(None, description='movie_id')
+    movie_id: UUID4 = Field(description='movie_id')
     review: str = Field(description='text review')
 
 
 class AddBookmark(BaseModel):
-    movie_id: UUID4 | None = Field(None, description='movie_id')
+    movie_id: UUID4 = Field(description='movie_id')
+
+
+class IdMovieInfo(BaseModel):
+    movie_id: UUID4 = Query('11111111-2222-3333-4444-555555555555', description='movie_id')

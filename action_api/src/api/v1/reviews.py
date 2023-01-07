@@ -34,7 +34,7 @@ async def add_review(
                                              add_review.review)
     if not review:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail=messages.FAULT_BOBY)
-    return review
+    return Review(**review)
 
 
 @router.delete(
@@ -73,7 +73,7 @@ async def review_details(
     if not review:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, 
                             detail=messages.REVIEW_NOT_FOUND)
-    return review
+    return Review(**review)
 
 
 @router.get(
@@ -84,17 +84,17 @@ async def review_details(
     response_description='Список информации по рецензиям с паджинацией',
 )
 async def reviews_list(
-    movie_id: IdMovie = Depends(IdMovie),
+    query_movie_id: IdMovie = Depends(IdMovie),
     paginate: PaginatedParams = Depends(PaginatedParams),
     review_service: BaseReviewsService = Depends(get_reviews_service),
     token_data: TokenData = Depends(authenticate),
 ) -> PaginatedReviews:
     """Show reviews from user_id or movie_id."""
     user_id = uuid.UUID(token_data.user)
-    movie_id = movie_id.movie_id
+    movie_id = query_movie_id.movie_id
     reviews = await review_service.read_reviews(
         user_id, movie_id, paginate.size, paginate.page
     )
     if not reviews:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail=messages.FAULT_BOBY)
-    return reviews
+    return PaginatedReviews(**reviews)
