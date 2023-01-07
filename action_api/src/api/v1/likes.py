@@ -1,10 +1,10 @@
 from http import HTTPStatus
 from fastapi import APIRouter, Depends, HTTPException, Body, status
-from fastapi.responses import JSONResponse, Response
+from fastapi.responses import Response
 import uuid
 
 from models.response import PaginatedLikes, InfoLikes
-from models.request import IdMovie, PaginatedParams, AddLike
+from models.request import IdMovie, PaginatedParams, AddLike, IdMovieInfo
 from models.likes import Like
 from services_abc.likes_abc import BaseLikesService
 from services_abc.composition_services import get_likes_service
@@ -32,7 +32,7 @@ async def add_like(
     like = await likes_service.add_like(user_id, add_like.movie_id, add_like.like)
     if not like:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail=messages.FAULT_BOBY)
-    return like
+    return Like(**like)
 
 
 @router.delete(
@@ -51,7 +51,7 @@ async def delete_like(
     result = await likes_service.delete_like(user_id, add_like.movie_id)
     if result is True:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail=messages.FAULT_BOBY)
-    return Response(status_code=status.HTTP_204_NO_CONTENT)
+    Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 @router.get(
@@ -71,7 +71,7 @@ async def like_details(
     if not like:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, 
                             detail=messages.LIKE_NOT_FOUND)
-    return like
+    return Like(**like)
 
 
 @router.get(
@@ -82,21 +82,21 @@ async def like_details(
     response_description='Список информации по лайкам с паджинацией',
 )
 async def likes_list(
-    movie_id: IdMovie = Depends(IdMovie),
+    query_movie_id: IdMovie = Depends(IdMovie),
     paginate: PaginatedParams = Depends(PaginatedParams),
     likes_service: BaseLikesService = Depends(get_likes_service),
     token_data: TokenData = Depends(authenticate),
 ) -> PaginatedLikes:
     """Show likes from user_id or movie_id."""
     user_id = uuid.UUID(token_data.user)
-    movie_id = movie_id.movie_id
+    movie_id = query_movie_id.movie_id
     likes = await likes_service.read_likes(user_id,
                                            movie_id, 
                                            paginate.size, 
                                            paginate.page)
     if not likes:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail=messages.FAULT_BOBY)
-    return likes
+    return PaginatedLikes(**likes)
 
 
 @router.get(
@@ -107,13 +107,13 @@ async def likes_list(
     response_description='Количество рейтинг лайков',
 )
 async def likes_info(
-    movie_id: IdMovie = Depends(IdMovie),
+    query_movie_id: IdMovieInfo = Depends(IdMovieInfo),
     likes_service: BaseLikesService = Depends(get_likes_service),
     token_data: TokenData = Depends(authenticate),
 ) -> InfoLikes:
     """Show likes from user_id or movie_id."""
-    movie_id = movie_id.movie_id
+    movie_id = query_movie_id.movie_id
     info = await likes_service.info_likes(movie_id)
     if not info:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail=messages.FAULT_BOBY)
-    return info
+    return InfoLikes(**info)

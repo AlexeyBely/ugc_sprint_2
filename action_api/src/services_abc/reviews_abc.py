@@ -11,7 +11,7 @@ class BaseReviewsService(ABC):
     @abstractmethod
     async def read_reviews(
         self,
-        user_id: uuid.UUID | None = None,
+        user_id: uuid.UUID,
         movie_id: uuid.UUID | None = None,
         size: int = 1,
         page: int = 20,
