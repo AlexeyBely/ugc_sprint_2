@@ -17,6 +17,7 @@ class ApiSettings(BaseSettings):
     token_algoritm: str = 'HS256'
     default_page_size: int = 20
     max_page_size: int = 100
+    dns_sentry: str = 'https://examplePublicKey@o0.ingest.sentry.io/0'
 
 
 api_settings = ApiSettings()
