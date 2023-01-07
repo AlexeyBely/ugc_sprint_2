@@ -1,12 +1,9 @@
-import uvicorn
-
 from api.v1 import likes, reviews, bookmarks
 from core.config import api_settings as setting
 from db import db_mongo
 
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
-from motor.motor_asyncio import AsyncIOMotorClient
 
 
 app = FastAPI(
@@ -21,9 +18,7 @@ app = FastAPI(
 
 @app.on_event('startup')
 async def startup():
-    db_mongo.client = AsyncIOMotorClient(
-        setting.mongodb_url, uuidRepresentation='pythonLegacy',
-    )
+    db_mongo.client = db_mongo.MotorClient(setting.mongodb_url)        
 
 
 app.include_router(likes.router, prefix='/action/api/v1/likes', tags=['likes'])

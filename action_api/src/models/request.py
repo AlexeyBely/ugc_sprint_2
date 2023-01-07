@@ -33,4 +33,5 @@ class AddBookmark(BaseModel):
 
 
 class IdMovieInfo(BaseModel):
-    movie_id: UUID4 = Query('11111111-2222-3333-4444-555555555555', description='movie_id')
+    movie_id: UUID4 = Query('11111111-2222-3333-4444-555555555555',
+                            description='movie_id')
