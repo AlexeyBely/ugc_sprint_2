@@ -1,8 +1,7 @@
 from functools import lru_cache
 from fastapi import Depends
-from motor.motor_asyncio import AsyncIOMotorClient
 
-from db.db_mongo import get_modgodb
+from db.db_mongo import get_modgodb, MotorClient
 from services.likes import MongoLikesService
 from services.reviews import MongoReviewsService
 from services.bookmarks import MongoBookmarksService
@@ -10,7 +9,7 @@ from services.bookmarks import MongoBookmarksService
 
 @lru_cache()
 def get_likes_service(
-    client: AsyncIOMotorClient = Depends(get_modgodb)
+    client: MotorClient = Depends(get_modgodb)
 ) -> MongoLikesService:
     """interface and movie service connectivity."""
     return MongoLikesService(client)
@@ -18,7 +17,7 @@ def get_likes_service(
 
 @lru_cache()
 def get_reviews_service(
-    client: AsyncIOMotorClient = Depends(get_modgodb),
+    client: MotorClient = Depends(get_modgodb),
 ) -> MongoReviewsService:
     """interface and movie service connectivity."""
     return MongoReviewsService(client)
@@ -26,7 +25,7 @@ def get_reviews_service(
 
 @lru_cache()
 def get_bookmarks_service(
-    client: AsyncIOMotorClient = Depends(get_modgodb),
+    client: MotorClient = Depends(get_modgodb),
 ) -> MongoBookmarksService:
     """interface and movie service connectivity."""
     return MongoBookmarksService(client)

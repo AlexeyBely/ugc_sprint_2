@@ -1,7 +1,7 @@
 import uuid
 
 from datetime import datetime
-from motor.motor_asyncio import AsyncIOMotorClient
+from db.db_mongo import MotorClient
 from bson import ObjectId
 
 from services_abc.likes_abc import BaseLikesService
@@ -12,8 +12,8 @@ from services.utils import UtilsService
 class MongoLikesService(BaseLikesService, UtilsService):
     """read/write docs to likes collection."""
 
-    def __init__(self, client: AsyncIOMotorClient):
-        self.client = client
+    def __init__(self, client: MotorClient):
+        self.client = client.client_mongodb
         self.db = self.client[setting.mongodb_db]
         self.collection = self.db[setting.mongodb_coll_likes]
 

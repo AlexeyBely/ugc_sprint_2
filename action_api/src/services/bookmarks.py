@@ -1,8 +1,7 @@
 import uuid
 
 from datetime import datetime
-from motor.motor_asyncio import AsyncIOMotorClient
-from bson import ObjectId
+from db.db_mongo import MotorClient
 
 from services_abc.bookmarks_abc import BaseBookmarksService
 from core.config import api_settings as setting
@@ -12,8 +11,8 @@ from services.utils import UtilsService
 class MongoBookmarksService(BaseBookmarksService, UtilsService):
     """read/write docs to bookmarks collection."""
 
-    def __init__(self, client: AsyncIOMotorClient):
-        self.client = client
+    def __init__(self, client: MotorClient):
+        self.client = client.client_mongodb
         self.db = self.client[setting.mongodb_db]
         self.collection = self.db[setting.mongodb_coll_bookmarks]
 
