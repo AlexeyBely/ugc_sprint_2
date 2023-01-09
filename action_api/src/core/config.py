@@ -3,6 +3,7 @@ from logging import config as logging_config
 from core.logger import LOGGING
 from pydantic import BaseSettings, Field
 
+
 logging_config.dictConfig(LOGGING)
 
 
@@ -18,6 +19,8 @@ class ApiSettings(BaseSettings):
     default_page_size: int = 20
     max_page_size: int = 100
     dns_sentry: str = 'https://examplePublicKey@o0.ingest.sentry.io/0'
+    logstash_host = '127.0.0.1'
+    logstash_port = 5044
 
 
 api_settings = ApiSettings()
