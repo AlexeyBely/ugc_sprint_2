@@ -11,3 +11,4 @@ python-jose[cryptography]==3.3.0
 requests==2.28.1
 oitnb==0.2.2
 sentry-sdk[fastapi]==1.12.1
+python-logstash-async==2.5.0
