@@ -37,21 +37,22 @@ async def add_bookmark(
 
 @router.delete(
     '/',
+    response_model=Bookmark,
     summary='Удалить закладку',
     description='Удалить закладку к кинопроизведению с movie_id',
-    response_description='HTTP статус - 204 No Content',
+    response_description='Полная информация по удаленной закладке',
 )
 async def delete_bookmark(
     add_bm: AddBookmark = Body(...),
     bm_service: BaseBookmarksService = Depends(get_bookmarks_service),
     token_data: TokenData = Depends(authenticate),
-) -> None:
+) -> Bookmark:
     """Delete bookmark."""
     user_id = uuid.UUID(token_data.user)
     result = await bm_service.delete_bookmark(user_id, add_bm.movie_id)
-    if result is True:
+    if result is None:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail=messages.FAULT_BOBY)
-    Response(status_code=status.HTTP_204_NO_CONTENT)
+    return Bookmark(**result)
 
 
 @router.get(

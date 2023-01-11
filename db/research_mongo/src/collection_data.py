@@ -3,7 +3,7 @@ import random
 
 from datetime import datetime
 
-USER_COUNT = 100
+USER_COUNT = 900
 MOVIE_COUNT = 1000
 user_ids = [uuid.uuid4() for x in range(USER_COUNT)]
 movie_ids = [uuid.uuid4() for x in range(MOVIE_COUNT)]

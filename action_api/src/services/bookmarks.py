@@ -39,6 +39,8 @@ class MongoBookmarksService(BaseBookmarksService, UtilsService):
         bookmark = await self.collection.find_one({'_id': bm_insert.inserted_id})
         return bookmark
 
-    async def delete_bookmark(self, user_id: uuid.UUID, movie_id: uuid.UUID) -> bool:
+    async def delete_bookmark(
+        self, user_id: uuid.UUID, movie_id: uuid.UUID
+    ) -> dict | None:
         """delete the bookmark."""
         return await self.delete_doc(user_id, movie_id)

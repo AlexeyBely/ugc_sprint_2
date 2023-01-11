@@ -37,21 +37,22 @@ async def add_like(
 
 @router.delete(
     '/',
+    response_model=Like,
     summary='Удалить лайк',
     description='Удалить лайк к кинопроизведению с movie_id',
-    response_description='HTTP статус - 204 No Content',
+    response_description='Полная информация по удаленному лайку',
 )
 async def delete_like(
     add_like: AddLike = Body(...),
     likes_service: BaseLikesService = Depends(get_likes_service),
     token_data: TokenData = Depends(authenticate),
-) -> None:
+) -> Like:
     """Delete like."""
     user_id = uuid.UUID(token_data.user)
     result = await likes_service.delete_like(user_id, add_like.movie_id)
-    if result is True:
+    if result is None:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail=messages.FAULT_BOBY)
-    Response(status_code=status.HTTP_204_NO_CONTENT)
+    return Like(**result)
 
 
 @router.get(

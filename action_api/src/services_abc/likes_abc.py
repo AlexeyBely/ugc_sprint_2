@@ -30,11 +30,11 @@ class BaseLikesService(ABC):
         pass
 
     @abstractmethod
-    async def delete_like(self, user_id: uuid.UUID, movie_id: uuid.UUID) -> bool:
+    async def delete_like(self, user_id: uuid.UUID, movie_id: uuid.UUID) -> dict | None:
         """
         Delete the like.
         
-        return False - ok, True - fault
+        return deleted like
         """
         pass
 

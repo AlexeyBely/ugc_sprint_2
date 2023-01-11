@@ -40,35 +40,23 @@ class MongoLikesService(BaseLikesService, UtilsService):
     async def add_like(self, user_id: uuid.UUID, movie_id: uuid.UUID, 
                        rating: int) -> dict:
         """Add or modified like."""
-        like = await self.collection.find_one({'user_id': user_id, 'movie_id': movie_id})
-        if like is None:
-            new_like = {
-                'user_id': user_id,
-                'movie_id': movie_id,
-                'like': rating,
-                'created': datetime.now(),
-                'modified': datetime.now(),
-            }
-            like_obj = await self.collection.insert_one(new_like)
-            like_id = like_obj.inserted_id
-        else:
-            update = {
-                'like': rating,
-                'modified': datetime.now(),
-            }
-            like_obj = await self.collection.update_one({'_id': like['_id']}, 
-                                                        {'$set': update})
-            like_id = like['_id']
-        new_like = await self.collection.find_one({'_id': like_id})
+        new = {
+            'user_id': user_id,
+            'movie_id': movie_id,
+            'like': rating,
+            'created': datetime.now(),
+            'modified': datetime.now(),
+        }
+        update = {
+            'like': rating,
+            'modified': datetime.now(),
+        }
+        new_like = await self.add_or_update_doc(user_id, movie_id, update, new)
         await self.add_like_to_review(user_id, movie_id, rating)
         return new_like
 
-    async def delete_like(self, user_id: uuid.UUID, movie_id: uuid.UUID) -> bool:
-        """
-        delete the like.
-        
-        return False - ok, True - fault
-        """
+    async def delete_like(self, user_id: uuid.UUID, movie_id: uuid.UUID) -> dict | None:
+        """delete the like."""
         return await self.delete_doc(user_id, movie_id)
 
     async def info_likes(self, movie_id: uuid.UUID) -> dict:

@@ -17,7 +17,9 @@ class BaseBookmarksService(ABC):
         pass
 
     @abstractmethod
-    async def delete_bookmark(self, user_id: uuid.UUID, movie_id: uuid.UUID) -> bool:
+    async def delete_bookmark(
+        self, user_id: uuid.UUID, movie_id: uuid.UUID
+    ) -> dict | None:
         """
         delete the bookmark.                
         return False - ok, True - fault

@@ -1,4 +1,6 @@
 import uuid
+from pymongo import ReturnDocument
+
 from core.config import api_settings as setting
 
 
@@ -20,19 +22,16 @@ class UtilsService:
         }
         return pages
 
-    async def delete_doc(self, user_id: uuid.UUID, movie_id: uuid.UUID) -> bool:
+    async def delete_doc(self, user_id: uuid.UUID, movie_id: uuid.UUID) -> dict | None:
         """
         delete the doc.
         
-        return False - ok, True - fault
+        return deleted doc
         """
-        doc = await self.collection.find_one({'user_id': user_id, 'movie_id': movie_id})
-        if doc is None:
-            return True
-        delete_result = await self.collection.delete_one({'_id': doc['_id']})
-        if delete_result.deleted_count > 0:
-            return False
-        return True
+        delete_doc = await self.collection.find_one_and_delete(
+            {'user_id': user_id, 'movie_id': movie_id}
+        )
+        return delete_doc
 
     async def add_like_to_review(
         self, user_id: uuid.UUID, movie_id: uuid.UUID, raiting: int
@@ -58,3 +57,21 @@ class UtilsService:
         if like is None:
             return None
         return like['like']
+    
+    async def add_or_update_doc(
+        self, 
+        user_id: uuid.UUID, 
+        movie_id: uuid.UUID, 
+        update_data: dict,
+        new_data: dict,
+    ) -> dict:
+        """update or add doc."""
+        new_doc = await self.collection.find_one_and_update(
+            {'user_id': user_id, 'movie_id': movie_id}, 
+            {'$set': new_data},
+            return_document=ReturnDocument.AFTER,
+        )
+        if new_doc is None:
+            doc_obj = await self.collection.insert_one(new_data)
+            new_doc = await self.collection.find_one({'_id': doc_obj.inserted_id})        
+        return new_doc
