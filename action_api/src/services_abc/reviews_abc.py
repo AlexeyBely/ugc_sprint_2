@@ -31,10 +31,12 @@ class BaseReviewsService(ABC):
         pass
 
     @abstractmethod
-    async def delete_review(self, user_id: uuid.UUID, movie_id: uuid.UUID) -> bool:
+    async def delete_review(
+        self, user_id: uuid.UUID, movie_id: uuid.UUID
+    ) -> dict | None:
         """
         delete the review.
         
-        return False - ok, True - fault
+        return deleted review
         """
         pass

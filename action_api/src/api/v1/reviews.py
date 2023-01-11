@@ -41,19 +41,20 @@ async def add_review(
     '/',
     summary='Удалить рецензию',
     description='Удалить рецензию к кинопроизведению с movie_id',
-    response_description='HTTP статус - 204 No Content',
+    response_description='Полная информация по удаленной рецензии',
 )
 async def delete_review(
+    response_model=Review,
     add_review: AddReview = Body(...),
     review_service: BaseReviewsService = Depends(get_reviews_service),
     token_data: TokenData = Depends(authenticate),
-) -> None:
+) -> Review:
     """Delete review."""
     user_id = uuid.UUID(token_data.user)
     result = await review_service.delete_review(user_id, add_review.movie_id)
-    if result is True:
+    if result is None:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail=messages.FAULT_BOBY)
-    Response(status_code=status.HTTP_204_NO_CONTENT)
+    return Review(**result)
 
 
 @router.get(

@@ -1,5 +1,4 @@
 from motor.motor_asyncio import AsyncIOMotorClient
-from core.config import api_settings as setting
 
 
 class MotorClient:

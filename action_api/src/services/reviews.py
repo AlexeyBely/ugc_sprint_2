@@ -72,10 +72,8 @@ class MongoReviewsService(BaseReviewsService, UtilsService):
         new_review = await self.collection.find_one({'_id': review_id})
         return new_review
 
-    async def delete_review(self, user_id: uuid.UUID, movie_id: uuid.UUID) -> bool:
-        """
-        delete the review.
-        
-        return False - ok, True - fault
-        """
+    async def delete_review(
+        self, user_id: uuid.UUID, movie_id: uuid.UUID
+    ) -> dict | None:
+        """delete the review."""
         return await self.delete_doc(user_id, movie_id)

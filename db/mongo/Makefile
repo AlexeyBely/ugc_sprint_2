@@ -25,11 +25,11 @@ collection:
 	docker exec -it mongors1n1 bash -c 'echo "use actionsDb" | mongosh'
 	docker exec -it mongos1 bash -c 'echo "sh.enableSharding(\"actionsDb\")" | mongosh'
 	docker exec -it mongos1 bash -c 'echo "db.createCollection(\"actionsDb.likes\")" | mongosh' 
-	docker exec -it mongos1 bash -c 'echo "sh.shardCollection(\"actionsDb.likes\", {\"someField\": \"hashed\"})" | mongosh'
+	docker exec -it mongos1 bash -c 'echo "sh.shardCollection(\"actionsDb.likes\", {\"user_id\": \"hashed\"})" | mongosh'
 	docker exec -it mongos1 bash -c 'echo "db.createCollection(\"actionsDb.reviews\")" | mongosh' 
-	docker exec -it mongos1 bash -c 'echo "sh.shardCollection(\"actionsDb.reviews\", {\"someField\": \"hashed\"})" | mongosh'
+	docker exec -it mongos1 bash -c 'echo "sh.shardCollection(\"actionsDb.reviews\", {\"user_id\": \"hashed\"})" | mongosh'
 	docker exec -it mongos1 bash -c 'echo "db.createCollection(\"actionsDb.bookmarks\")" | mongosh' 
-	docker exec -it mongos1 bash -c 'echo "sh.shardCollection(\"actionsDb.bookmarks\", {\"someField\": \"hashed\"})" | mongosh' 
+	docker exec -it mongos1 bash -c 'echo "sh.shardCollection(\"actionsDb.bookmarks\", {\"user_id\": \"hashed\"})" | mongosh' 
 
 
 
