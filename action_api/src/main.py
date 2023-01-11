@@ -55,4 +55,3 @@ app.include_router(bookmarks.router, prefix='/action/api/v1/bookmarks',
 )
 async def trigger_error():
     division_by_zero = 1 / 0
-

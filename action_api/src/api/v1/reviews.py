@@ -39,12 +39,12 @@ async def add_review(
 
 @router.delete(
     '/',
+    response_model=Review,
     summary='Удалить рецензию',
     description='Удалить рецензию к кинопроизведению с movie_id',
     response_description='Полная информация по удаленной рецензии',
 )
 async def delete_review(
-    response_model=Review,
     add_review: AddReview = Body(...),
     review_service: BaseReviewsService = Depends(get_reviews_service),
     token_data: TokenData = Depends(authenticate),
