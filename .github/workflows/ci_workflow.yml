@@ -20,6 +20,12 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
+        script: |
+          export PROJECT_NAME=${{ secrets.PROJECT_NAME }} > .env
+          export ACTION_HOST=${{ secrets.ACTION_HOST }} > .env
+          export ACTION_PORT=${{ secrets.ACTION_PORT }} > .env
+          export MONGODB_URL=${{ secrets.MONGODB_URL }} > .env
+          export MONGODB_LOCAL_URL=${{ secrets.MONGODB_LOCAL_URL }} > .env
 
     - name: Install dependencies
       run: |
