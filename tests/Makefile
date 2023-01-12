@@ -2,7 +2,7 @@ PN=tests_action_
 
 all: config_mongo
 
-config_mongo: config_servers shard_1 shard_2
+config_mongo: config_servers shard_1 shard_2 collection
 
 config_servers:
 	docker exec -i $(PN)mongocfg1 bash -c 'echo "rs.initiate({_id: \"mongors1conf\", configsvr: true, members: [{_id: 0, host: \"$(PN)mongocfg1\"}, {_id: 1, host: \"$(PN)mongocfg2\"}, {_id: 2, host: \"$(PN)mongocfg3\"}]})" | mongosh'
