@@ -46,31 +46,20 @@ class MongoReviewsService(BaseReviewsService, UtilsService):
     async def add_review(self, user_id: uuid.UUID, movie_id: uuid.UUID, 
                          text: str) -> dict:
         """Add new review."""
-        review = await self.collection.find_one({'user_id': user_id, 
-                                                 'movie_id': movie_id})
-        if review is None:
-            new_review = {
-                'user_id': user_id,
-                'movie_id': movie_id,
-                'review': text,
-                'like': await self.read_like_reiting(user_id, movie_id),
-                'created': datetime.now(),
-                'modified': datetime.now(),
-            }
-            review_obj = await self.collection.insert_one(new_review)
-            review_id = review_obj.inserted_id
-        else:
-            update = {
-                'review': text,
-                'like': await self.read_like_reiting(user_id, movie_id),
-                'modified': datetime.now(),
-            }
-            review_obj = await self.collection.update_one(
-                {'_id': review['_id']}, {'$set': update}
-            )
-            review_id = review['_id']
-        new_review = await self.collection.find_one({'_id': review_id})
-        return new_review
+        new = {
+            'user_id': user_id,
+            'movie_id': movie_id,
+            'review': text,
+            'like': await self.read_like_reiting(user_id, movie_id),
+            'created': datetime.now(),
+            'modified': datetime.now(),
+        }
+        update = {
+            'review': text,
+            'like': await self.read_like_reiting(user_id, movie_id),
+            'modified': datetime.now(),
+        }
+        return await self.add_or_update_doc(user_id, movie_id, update, new)
 
     async def delete_review(
         self, user_id: uuid.UUID, movie_id: uuid.UUID

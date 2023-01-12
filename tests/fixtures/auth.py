@@ -35,4 +35,4 @@ def auth_bearer(user_movie_ids) -> tuple:
         settings.token_algoritm
     )
     header_bearer = {'Authorization': f'Bearer {token}'}
-    return header_bearer, user_id
+    return header_bearer, str(user_id)
