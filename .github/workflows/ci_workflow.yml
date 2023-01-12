@@ -49,6 +49,11 @@ jobs:
     - name: Run tests
       run: |
         cd tests/
+        echo PROJECT_NAME=${{ secrets.PROJECT_NAME }} > .env
+        echo ACTION_HOST=${{ secrets.ACTION_HOST }} > .env
+        echo ACTION_PORT=${{ secrets.ACTION_PORT }} > .env
+        echo MONGODB_URL=${{ secrets.MONGODB_URL }} > .env
+        echo MONGODB_LOCAL_URL=${{ secrets.MONGODB_LOCAL_URL }} > .env
         docker-compose up -d
         make
         pip install -r requirements.txt
