@@ -21,11 +21,11 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
         script: |
-          export PROJECT_NAME=${{ secrets.PROJECT_NAME }} > .env
-          export ACTION_HOST=${{ secrets.ACTION_HOST }} > .env
-          export ACTION_PORT=${{ secrets.ACTION_PORT }} > .env
-          export MONGODB_URL=${{ secrets.MONGODB_URL }} > .env
-          export MONGODB_LOCAL_URL=${{ secrets.MONGODB_LOCAL_URL }} > .env
+          export PROJECT_NAME=${{ secrets.PROJECT_NAME }}
+          export ACTION_HOST=${{ secrets.ACTION_HOST }}
+          export ACTION_PORT=${{ secrets.ACTION_PORT }}
+          export MONGODB_URL=${{ secrets.MONGODB_URL }}
+          export MONGODB_LOCAL_URL=${{ secrets.MONGODB_LOCAL_URL }}
 
     - name: Install dependencies
       run: |
@@ -55,12 +55,6 @@ jobs:
     - name: Run tests
       run: |
         cd tests/
-        touch .env
-        echo PROJECT_NAME=${{ secrets.PROJECT_NAME }} > .env
-        echo ACTION_HOST=${{ secrets.ACTION_HOST }} > .env
-        echo ACTION_PORT=${{ secrets.ACTION_PORT }} > .env
-        echo MONGODB_URL=${{ secrets.MONGODB_URL }} > .env
-        echo MONGODB_LOCAL_URL=${{ secrets.MONGODB_LOCAL_URL }} > .env
         docker-compose up -d
         make
         pip install -r requirements.txt
