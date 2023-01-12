@@ -46,6 +46,14 @@ jobs:
         name: reports
         path: reports/
 
+    - name: Run tests
+      run: |
+        cd tests/
+        docker-compose up -d
+        make
+        pip install -r requirements.txt
+        pytest -v -s tests/src
+
   message:
 
     runs-on: ubuntu-latest
