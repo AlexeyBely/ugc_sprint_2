@@ -49,6 +49,7 @@ jobs:
     - name: Run tests
       run: |
         cd tests/
+        touch .env
         echo PROJECT_NAME=${{ secrets.PROJECT_NAME }} > .env
         echo ACTION_HOST=${{ secrets.ACTION_HOST }} > .env
         echo ACTION_PORT=${{ secrets.ACTION_PORT }} > .env
