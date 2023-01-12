@@ -8,7 +8,7 @@ config_servers:
 	docker exec -i $(PN)mongocfg1 bash -c 'echo "rs.initiate({_id: \"mongors1conf\", configsvr: true, members: [{_id: 0, host: \"$(PN)mongocfg1\"}, {_id: 1, host: \"$(PN)mongocfg2\"}, {_id: 2, host: \"$(PN)mongocfg3\"}]})" | mongosh'
 	sleep 2
 	docker exec -i $(PN)mongocfg1 bash -c 'echo "rs.status()" | mongosh'
-
+	sleep 10
 shard_1:
 	docker exec -i $(PN)mongors1n1 bash -c 'echo "rs.initiate({_id: \"mongors1\", members: [{_id: 0, host: \"$(PN)mongors1n1\"}, {_id: 1, host: \"$(PN)mongors1n2\"}, {_id: 2, host: \"$(PN)mongors1n3\"}]})" | mongosh'
 	sleep 2
